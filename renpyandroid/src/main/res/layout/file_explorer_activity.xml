@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <!-- Header columns / Breadcrumbs -->
+    <LinearLayout
+        android:id="@+id/headerColumnsRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:gravity="center_vertical">
+        
+        <ImageButton
+            android:id="@+id/btnNavUp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="@color/colorPrimary"
+            android:contentDescription="@string/file_nav_up"/>
+
+        <HorizontalScrollView
+            android:id="@+id/breadcrumbScroll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/breadcrumbContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" />
+        </HorizontalScrollView>
+
+        <ImageButton
+            android:id="@+id/btnQuickAdd"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:src="@android:drawable/ic_input_add"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="@color/colorPrimary"
+            android:contentDescription="@string/import_title"/>
+
+        <ImageButton
+            android:id="@+id/btnSearch"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_search"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="@color/colorPrimary"
+            android:contentDescription="@string/file_explorer_search"/>
+
+        <ImageButton
+            android:id="@+id/btnSystemFiles"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_folder"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="@color/colorPrimary"
+            android:contentDescription="@string/documents_provider_open_action"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Column Headers -->
+    <LinearLayout
+        android:id="@+id/columnHeadersRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="56dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="4dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1.5"
+            android:layout_height="wrap_content"
+            android:text="@string/file_col_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"/>
+
+        <View android:layout_width="1dp" android:layout_height="12dp" android:background="@color/colorDivider" android:layout_marginHorizontal="4dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/file_col_date"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"/>
+
+        <View android:layout_width="1dp" android:layout_height="12dp" android:background="@color/colorDivider" android:layout_marginHorizontal="4dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/file_col_type"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"/>
+
+        <View android:layout_width="1dp" android:layout_height="12dp" android:background="@color/colorDivider" android:layout_marginHorizontal="4dp"/>
+
+        <TextView
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/file_col_size"
+            android:gravity="end"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/searchActionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="4dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/etSearchQuery"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:hint="@string/file_explorer_search_hint"
+            android:singleLine="true"
+            android:imeOptions="actionSearch"
+            android:paddingHorizontal="12dp"
+            android:background="@android:color/transparent"
+            android:textColor="@color/colorOnSurface"
+            android:textColorHint="@color/colorTextSecondary" />
+
+        <ImageButton
+            android:id="@+id/btnSearchClose"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="@color/colorIconTint"
+            android:contentDescription="@string/piano_close"/>
+    </LinearLayout>
+    
+    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/colorDivider" android:layout_marginBottom="4dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="4dp"
+        android:paddingHorizontal="4dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"/>
+
+    <!-- Bottom Action Bar -->
+    <LinearLayout
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorSurface"
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/actionContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/btnMenu"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_more_vert"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                app:tint="@color/colorOnSurface"
+                android:contentDescription="@string/file_menu"/>
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_delete"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                app:tint="@color/colorOnSurface"
+                android:contentDescription="@string/action_delete"/>
+                
+            <ImageButton
+                android:id="@+id/btnRename"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@android:drawable/ic_menu_edit"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                app:tint="@color/colorOnSurface"
+                android:contentDescription="@string/action_rename"/>
+
+            <ImageButton
+                android:id="@+id/btnCopy"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_copy" 
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                app:tint="@color/colorOnSurface"
+                android:contentDescription="@string/action_copy"/>
+
+            <ImageButton
+                android:id="@+id/btnCut"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_cut" 
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                app:tint="@color/colorOnSurface"
+                android:contentDescription="@string/action_cut"/>
+
+            <ImageButton
+                android:id="@+id/btnExtract"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_extract"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                app:tint="@color/colorOnSurface"
+                android:contentDescription="@string/action_extract"
+                android:visibility="gone"/>
+
+            <ImageButton
+                android:id="@+id/btnExport"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_save"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                app:tint="@color/colorOnSurface"
+                android:contentDescription="@string/label_export"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/fabPaste"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_paste"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            app:tint="@color/colorOnSurface"
+            android:contentDescription="@string/action_paste"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</LinearLayout>

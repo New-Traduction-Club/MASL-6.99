@@ -1,0 +1,83 @@
+plugins {
+    id 'com.android.application'
+}
+
+
+def localPropertiesFile = rootProject.file("local.properties")
+
+
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(localPropertiesFile))
+
+android {
+    compileSdkVersion 35
+
+    namespace "com.test.mas"
+
+    defaultConfig {
+        applicationId "com.test.mas"
+        minSdkVersion 21
+        targetSdkVersion 35
+        versionCode 1
+        versionName "0.0.1"
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"
+        }
+    }
+
+
+
+    signingConfigs {
+        release {
+            storeFile file(localProperties["key.store"])
+            storePassword localProperties["key.store.password"]
+            keyAlias localProperties['key.alias']
+            keyPassword localProperties["key.alias.password"]
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            packaging {
+                jniLibs {
+                    useLegacyPackaging = true
+                    excludes += [ "**/x86/*.so" ]
+                    keepDebugSymbols = [ "**/*.so" ]
+                }
+            }
+        }
+
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            packaging {
+                jniLibs {
+                    useLegacyPackaging = true
+                    excludes += [ "**/x86/*.so" ]
+                }
+            }
+            ndk {
+                debugSymbolLevel 'FULL'
+            }
+        }
+    }
+
+
+
+    androidResources {
+        noCompress = [ 'ogv', 'avi', 'mpg', 'webm', 'mkv', 'mp4', 'mp3', 'mp2', 'ogg', 'opus', 'flac', 'rpyc', 'rpymc', 'rpyb', ]
+    }
+
+    aaptOptions {
+        ignoreAssetsPattern "!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~"
+    }
+}
+
+dependencies {
+    implementation project(':renpyandroid')
+    implementation "androidx.work:work-runtime:2.9.0"
+    implementation 'com.google.android.material:material:1.13.0'
+}

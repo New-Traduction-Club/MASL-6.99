@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingVertical="12dp"
+    android:paddingHorizontal="16dp"
+    android:background="@android:color/transparent">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_file"
+        app:tint="@color/colorIconTint"/>
+
+    <!-- Name Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filename.txt"
+            android:textColor="@color/colorTextPrimary"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+
+        <TextView
+            android:id="@+id/textPath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:textColor="@color/colorTextSecondary"
+            android:textSize="11sp"
+            android:ellipsize="start"
+            android:maxLines="1"
+            android:visibility="gone"/>
+    </LinearLayout>
+
+    <View android:layout_width="1dp" android:layout_height="0dp" android:layout_marginHorizontal="4dp"/>
+
+    <!-- Date Column -->
+    <TextView
+        android:id="@+id/textDate"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="03-14-2026 10:28"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="14sp"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <View android:layout_width="1dp" android:layout_height="0dp" android:layout_marginHorizontal="4dp"/>
+
+    <!-- Type Column -->
+    <TextView
+        android:id="@+id/textType"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="File Folder"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="14sp"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+    <View android:layout_width="1dp" android:layout_height="0dp" android:layout_marginHorizontal="4dp"/>
+
+    <!-- Size Column -->
+    <TextView
+        android:id="@+id/textSize"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="1922 B"
+        android:textColor="@color/colorTextSecondary"
+        android:textSize="14sp"
+        android:gravity="end"
+        android:ellipsize="end"
+        android:maxLines="1"/>
+
+</LinearLayout>

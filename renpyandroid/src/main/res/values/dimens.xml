@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="start_menu_collapsed_height">270dp</dimen>
+</resources>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MASL: 6.99 Edition</string>
+
+    <!-- Setup Screen Strings -->
+    <string name="setup_title">Bienvenido a MASL: 6.99 Edition</string>
+    <string name="setup_description">Para usar este launcher, necesitas proporcionar los archivos originales de Doki Doki Literature Club y los archivos del mod Monika After Story. Respetamos las IP Guidelines y no podemos distribuir estos archivos.</string>
+    <string name="setup_step_1_title">Paso 1: Doki Doki Literature Club</string>
+    <string name="setup_step_1_desc">Descarga la versión oficial de DDLC para Windows.</string>
+    <string name="setup_step_1_url">https://ddlc.moe/</string>
+    <string name="setup_ddlc_sha256">SHA256: 2a3dd7969a06729a32ace0a6ece5f2327e29bdf460b8b39e6a8b0875e545632e</string>
+    <string name="setup_step_2_title">Paso 2: Monika After Story Mod</string>
+    <string name="setup_step_2_desc">Descarga la última versión del Mod Monika After Story.</string>
+    <string name="setup_step_2_url">https://github.com/New-Traduction-Club/</string>
+    <string name="setup_mod_sha256">SHA256: %1$s</string>
+    <string name="setup_btn_download">Descargar</string>
+    <string name="setup_btn_download_manual">Descargar manualmente</string>
+    <string name="setup_btn_download_auto">Descargar desde GitHub</string>
+    <string name="setup_btn_select_file">Seleccionar Archivo</string>
+    <string name="setup_confirm_delete_zip_title">¿Eliminar ZIP?</string>
+    <string name="setup_confirm_delete_zip_message">¿Quieres eliminar el archivo ZIP después de la instalación para ahorrar espacio?</string>
+    <string name="setup_downloading_mod">Descargando mod...</string>
+    <string name="setup_download_error">Error de descarga: %1$s</string>
+    <string name="setup_select_version_title">Seleccionar Versión</string>
+    <string name="setup_error_incompatible_version">Esta versión requiere una versión más reciente de la app (v%1$d). Por favor actualiza el launcher.</string>
+    <string name="setup_fetching_packages">Obteniendo versiones disponibles...</string>
+    <string name="setup_error_fetching_packages">No se pudieron obtener las versiones disponibles.</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="action_ok">Vale</string>
+    <string name="setup_btn_continue">Instalar y Continuar</string>
+    <string name="setup_file_selected">Seleccionado: %1$s</string>
+    <string name="setup_error_missing_files">Por favor selecciona ambos archivos ZIP para continuar.</string>
+    <string name="setup_language_label">Idioma:</string>
+    
+    <!-- Setup Progress -->
+    <string name="setup_progress_verifying">Verificando archivos...</string>
+    <string name="setup_progress_extracting_ddlc">Extrayendo DDLC...</string>
+    <string name="setup_progress_extracting_rpa">Desempaquetando archivos del juego (RPA)...</string>
+    <string name="setup_progress_extracting_mas">Instalando Monika After Story...</string>
+    <string name="setup_progress_finalizing">Finalizando instalación...</string>
+    <string name="setup_complete">¡Instalación completada!</string>
+    <string name="setup_error">Error: %1$s</string>
+    <string name="setup_error_checksum">Verificación de checksum fallida para %1$s. Por favor descarga el archivo correcto.</string>
+    <string name="setup_notifications_title">Activar notificaciones</string>
+    <string name="setup_notifications_description">Activa las notificaciones para que Monika pueda enviarte notificaciones cuando no estés en la app.</string>
+    <string name="setup_notifications_allow">Permitir notificaciones</string>
+    <string name="setup_notifications_skip">Omitir</string>
+    <string name="setup_notifications_continue">Continuar</string>
+    <string name="setup_notifications_enabled">¡Las notificaciones están activadas!</string>
+    <string name="setup_notifications_denied">Las notificaciones siguen desactivadas.</string>
+
+    <!-- Installation Strings -->
+    <string name="installing_language_data">Instalando datos para %1$s...</string>
+    <string name="install_error">Error instalando datos: %1$s</string>
+
+    <!-- File Explorer Strings -->
+    <string name="import_title">Opciones de Importación</string>
+    <string name="import_files">Importar Archivos</string>
+    <string name="import_folder">Importar carpeta</string>
+    <string name="import_zip">Importar ZIP</string>
+    <string name="create_folder">Crear Carpeta</string>
+    <string name="create_file">Crear Archivo</string>
+    <string name="cancel">Cancelar</string>
+    <string name="folder_name_hint">Nombre de la Carpeta</string>
+    <string name="file_name_hint">Nombre del archivo (ej. archivo.txt)</string>
+    <string name="create">Crear</string>
+    <string name="folder_already_exists">La carpeta ya existe.</string>
+    <string name="folder_created">Carpeta creada.</string>
+    <string name="file_created">Archivo creado.</string>
+    <string name="failed_to_create_file">Fallo al crear archivo.</string>
+    <string name="item_already_exists">Ya existe un archivo o carpeta con ese nombre.</string>
+    <string name="renamed_successfully">Renombrado exitosamente.</string>
+    <string name="failed_to_rename">Fallo al renombrar.</string>
+    <string name="error_renaming">Error al renombrar: %1$s</string>
+    <string name="deleted_items_mixed">Eliminados %1$d elementos. Fallaron: %2$d</string>
+    <string name="deleted_items">Eliminados %1$d elementos</string>
+    <string name="items_cut">Cortados %1$d elementos</string>
+    <string name="items_copied">Copiados %1$d elementos</string>
+    <string name="no_files_export">Ningún archivo seleccionado para exportar</string>
+    <string name="import_failed">Importación fallida: %1$s</string>
+    <string name="error_pasting">Error al pegar: %1$s</string>
+    <string name="rename_title">Renombrar</string>
+    <string name="rename_hint">Nuevo nombre</string>
+    <string name="failed_to_create_folder">Fallo al crear carpeta.</string>
+    <string name="delete_files">Eliminar archivos</string>
+    <string name="confirm_delete_message">¿Estás seguro de que quieres eliminar los archivos seleccionados?</string>
+    <string name="delete">Eliminar</string>
+    <string name="export_selection_title">Exportar selección</string>
+    <string name="export_selection_message">Vas a comprimir %1$d elementos en un archivo ZIP. ¿Continuar?</string>
+    <string name="export">Exportar</string>
+    <string name="export_completed">Exportación completada.</string>
+    <string name="export_error">Error de exportación: %1$s</string>
+    <string name="unzipping">Descomprimiendo…</string>
+    <string name="zip_imported_and_unzipped">ZIP importado y descomprimido</string>
+    <string name="error_importing_zip">Error importando ZIP: %1$s</string>
+    <string name="existing_file">Archivo existente</string>
+    <string name="existing_file_message">El archivo \'%1$s\' ya existe. ¿Qué quieres hacer?</string>
+    <string name="overwrite">Sobrescribir</string>
+    <string name="rename">Renombrar</string>
+    <string name="import_conflict_ignore">Ignorar</string>
+    <string name="import_conflict_copy_increment">Copiar con nombre nuevo</string>
+    <string name="import_conflict_apply_all">Aplicar esta elección a todos los archivos</string>
+    <string name="import_summary_message">Importación finalizada. Importados: %1$d • Ignorados: %2$d • Fallidos: %3$d</string>
+    <string name="parent_directory">..</string>
+    <string name="directory_format">[%s]</string>
+    <string name="failed_to_delete_some_files">Fallo al eliminar algunos archivos.</string>
+    <string name="export_completed_toast">¡Exportación completada!</string>
+    <string name="export_failed_toast">Fallo en exportación: %s</string>
+    <string name="import_zip_default_name">importar.zip</string>
+    <string name="export_zip_default_name">exportar.zip</string>
+    <string name="imported_successfully">Importado exitosamente</string>
+    <string name="error_importing_folder">Error importando carpeta: %s</string>
+    <string name="file_imported">Archivo importado: %s</string>
+    <string name="failed_import_ignore">Fallo en importación. Si ves tu archivo ignora este mensaje.</string>
+
+    <!-- File Explorer Column Headers -->
+    <string name="file_col_name">Nombre</string>
+    <string name="file_col_date">Fecha</string>
+    <string name="file_col_type">Tipo</string>
+    <string name="file_col_size">Tamaño</string>
+
+    <!-- File Explorer Content Descriptions -->
+    <string name="file_nav_up">Subir</string>
+    <string name="file_explorer_search">Buscar archivos</string>
+    <string name="file_explorer_search_hint">Buscar en esta carpeta...</string>
+    <string name="file_menu">Menú</string>
+
+    <!-- File Type Labels -->
+    <string name="file_type_folder">Carpeta</string>
+    <string name="file_type_text">Documento de texto</string>
+    <string name="file_type_script">Archivo de código</string>
+    <string name="file_type_image">Imagen</string>
+    <string name="file_type_audio">Audio</string>
+    <string name="file_type_archive">Archivo comprimido</string>
+    <string name="file_type_video">Video</string>
+    <string name="file_type_generic">Archivo</string>
+
+    <!-- LauncherActivity Strings -->
+    <string name="launcher_export_title">Exportar persistente</string>
+    <string name="launcher_export_message">Esto creará un archivo ZIP con todos tus datos guardados (persistente y otros archivos) de la carpeta externa de guardados. Se te pedirá elegir un destino. ¿Confirmar?</string>
+    <string name="launcher_import_title">Importar persistente</string>
+    <string name="launcher_import_message">Esto te permitirá importar tus archivos persistentes y guardados desde un archivo ZIP.\n\nIMPORTANTE: El ZIP debe contener los archivos (como \'persistent\') en la raíz, no dentro de una carpeta. Por ejemplo: archivo.zip/persistent\n\nSe te pedirá seleccionar un archivo ZIP. ¿Confirmar?</string>
+    <string name="launcher_proceed">Proceder</string>
+    <string name="launcher_import_completed">¡Importación completada!</string>
+    <string name="launcher_import_failed">Importación fallida: %s</string>
+
+    <!-- Launcher Strings -->
+    <string name="launcher_start_game">Iniciar juego</string>
+    <string name="launcher_update_game">Actualizar juego</string>
+    <string name="launcher_export_button">Exportar persistente</string>
+    <string name="launcher_import_button">Importar persistente</string>
+    <string name="launcher_browse_internal">Explorar archivos internos</string>
+    <string name="launcher_browse_external">Archivos de Guardado</string>
+    <string name="launcher_settings">Ajustes</string>
+    <string name="launcher_discord_rpc">Discord RPC</string>
+    <string name="launcher_backups">Copias de Seguridad</string>
+    <string name="launcher_add_extra_content">Añadir Contenido Extra</string>
+    <string name="launcher_all_programs">Ver más</string>
+
+    <!-- Launcher Button Subtitles -->
+    <string name="launcher_import_desc">Importar datos persistentes</string>
+    <string name="launcher_export_desc">Haz copias de seguridad</string>
+    <string name="launcher_internal_desc">Manejar archivos del juego</string>
+    <string name="launcher_external_desc">Acceder a guardados</string>
+    <string name="launcher_settings_desc">Configurar el launcher</string>
+    <string name="launcher_download_desc">Obtener actualizaciones</string>
+    <string name="launcher_backups_desc">Gestionar copias de seguridad</string>
+    <string name="discord_rpc_dialog_title">Discord RPC</string>
+    <string name="discord_rpc_dialog_message">Inicia sesión con Discord primero y luego activa Rich Presence para la actividad en juego.</string>
+    <string name="discord_rpc_warning_title">Advertencia de Discord RPC</string>
+    <string name="discord_rpc_warning_message">Esta función usa Discord Gateway (no oficial). Úsala bajo tu propio riesgo.</string>
+    <string name="discord_rpc_warning_denied">Discord RPC no se activó porque rechazaste la advertencia.</string>
+    <string name="discord_rpc_login_with_discord">Iniciar sesión con Discord</string>
+    <string name="discord_rpc_login_title">Inicio de sesión de Discord</string>
+    <string name="discord_rpc_enable_label">Activar Discord Rich Presence</string>
+    <string name="discord_rpc_enable_desc">Requiere una sesión iniciada en Discord.</string>
+    <string name="discord_rpc_login_status_connected">Sesión de Discord detectada.</string>
+    <string name="discord_rpc_login_status_disconnected">Aún no has iniciado sesión.</string>
+    <string name="discord_rpc_session_valid">Sesión válida</string>
+    <string name="discord_rpc_logout">Cerrar sesión</string>
+    <string name="discord_rpc_logout_confirm_title">¿Cerrar sesión de Discord?</string>
+    <string name="discord_rpc_logout_confirm_message">¿Quieres cerrar la sesión de Discord usada para RPC?</string>
+    <string name="discord_rpc_logout_success">Sesión de Discord eliminada.</string>
+    <string name="discord_rpc_login_required">Debes iniciar sesión con Discord antes de activar RPC.</string>
+    <string name="discord_rpc_login_success">Inicio de sesión en Discord completado. Token importado.</string>
+    <string name="discord_rpc_login_failed">No se pudo obtener el token de Discord desde el inicio de sesión.</string>
+    <string name="discord_rpc_saved_enabled">Discord RPC activado. Se iniciará al abrir el juego.</string>
+    <string name="discord_rpc_saved_disabled">Discord RPC desactivado.</string>
+    <string name="discord_rpc_presence_name">Monika After Story Launcher</string>
+    <string name="discord_rpc_presence_state">In the spaceroom</string>
+    <string name="discord_rpc_presence_details">Unofficial Monika After Story port</string>
+    <string name="discord_rpc_button_play_store">Play Store</string>
+    <string name="discord_rpc_button_github_repo">Github Repo</string>
+
+    <!-- SettingsActivity Strings -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_sound_effect_title">Efecto de sonido de botones</string>
+    <string name="settings_sound_effect_default">Predeterminado</string>
+    <string name="settings_sound_effect_reimagined">Reimaginado</string>
+    <string name="select_language_title">Seleccionar Idioma</string>
+    <string name="title_tools">Herramientas</string>
+    <string name="label_internal_files">Explorar Archivos Internos</string>
+    <string name="label_external_files">Archivos de Guardado</string>
+    <string name="title_file_explorer">Explorador de Archivos</string>
+    <string name="label_import">Importar</string>
+    <string name="label_export">Exportar</string>
+    <string name="title_backups">Copias de Seguridad</string>
+    <string name="create_backup">Crear Copia</string>
+    <string name="restore_backup">Restaurar</string>
+    <string name="delete_backup">Borrar</string>
+    <string name="backup_created_toast">¡Copia de seguridad creada correctamente!</string>
+    <string name="backup_failed_toast">Fallo al crear la copia: %s</string>
+    <string name="backup_restored_toast">¡Copia de seguridad restaurada correctamente!</string>
+    <string name="backup_restore_failed_toast">Fallo al restaurar: %s</string>
+    <string name="backup_deleted_toast">Copia de seguridad borrada.</string>
+    <string name="backup_delete_failed_toast">Fallo al borrar la copia de seguridad.</string>
+    <string name="confirm_restore_title">Restaurar Copia</string>
+    <string name="confirm_restore_message">¿Seguro que quieres restaurar esta copia? Todos los datos actuales serán eliminados y reemplazados por el contenido de la copia.</string>
+    <string name="confirm_delete_backup_title">Borrar Copia</string>
+    <string name="confirm_delete_backup_message">¿Seguro que quieres borrar esta copia de seguridad?</string>
+    <string name="no_backups_found">No se encontraron copias de seguridad.</string>
+
+    <!-- Translation Sync Strings -->
+    <string name="title_translation_sync">Sincronización Github (TL Español)</string>
+    <string name="translation_checking">Comprobando en servidor remoto...</string>
+    <string name="translation_uptodate">La traducción está actualizada.</string>
+    <string name="translation_update_available">¡Nueva traducción disponible!</string>
+    <string name="translation_updating">Actualizando traducción...</string>
+    <string name="translation_updated">Traducción actualizada exitosamente.</string>
+    <string name="translation_error">Error comprobando/actualizando traducción.</string>
+    <string name="translation_sync_button">Buscar actualizaciones</string>
+    <string name="translation_commit_info">Ver: %1$s</string>
+
+    <!-- File Operations -->
+    <string name="action_copy">Copiar</string>
+    <string name="action_cut">Cortar</string>
+    <string name="action_paste">Pegar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="selected_count">%1$d seleccionados</string>
+    <string name="clipboard_copy">Copiado al portapapeles</string>
+    <string name="clipboard_cut">Cortado al portapapeles</string>
+    <string name="paste_success">Archivos pegados</string>
+    <string name="paste_error">Error pegando archivos</string>
+
+    <string name="status_checking_network">Comprobando red...</string>
+    <string name="status_checking_updates">Buscando actualizaciones...</string>
+    <string name="status_launching_game">Iniciando juego...</string>
+    <string name="status_export_ready">Exportación lista</string>
+    <string name="status_import_completed">Importación completada exitosamente</string>
+    <string name="error_check_updates">Fallo al buscar actualizaciones</string>
+    <string name="error_update_failed">Actualización fallida</string>
+    <string name="error_update_failed_launching_outdated">Actualización fallida. Iniciando versión desactualizada.</string>
+
+    <string name="dialog_update_available_title">Actualización Disponible</string>
+    <string name="dialog_update_available_wifi_message">Hay una actualización disponible. ¿Descargar ahora?</string>
+    <string name="dialog_update_available_mobile_message">Hay una actualización disponible. Estás usando datos móviles. ¿Quieres descargarla ahora?</string>
+    <string name="action_skip">Omitir</string>
+    <string name="action_update">Actualizar</string>
+
+    <string name="settings_category_general">General</string>
+    <string name="settings_category_appearance">Apariencia</string>
+    <string name="settings_category_network">Red</string>
+    <string name="settings_wifi_only_title">Actualizaciones solo Wi-Fi</string>
+    <string name="settings_wifi_only_desc">Solo descargar actualizaciones cuando esté conectado a Wi-Fi</string>
+    <string name="settings_dark_mode_title">Modo oscuro</string>
+    <string name="settings_dark_mode_desc">Usar el modo oscuro</string>
+
+    <!-- Notification Strings -->
+    <string name="notification_channel_name">Descargas</string>
+    <string name="notification_channel_description">Notificaciones para descargas de archivos</string>
+    <string name="notification_download_title">Descargando mod</string>
+    <string name="notification_download_complete">Descarga Completada</string>
+    <string name="notification_download_failed">Descarga Fallida</string>
+    <string name="notification_download_progress">Velocidad: %1$s/s • Estimado: %2$s</string>
+
+    <string name="setup_download_progress_full">%1$d%% • %2$s / %3$s • %4$s • ETA: %5$s</string>
+    <string name="setup_download_progress_indeterminate">%1$s • %2$s</string>
+    <string name="permission_notification_title">¿Activar Notificaciones?</string>
+    <string name="permission_notification_message">¿Permitir que la aplicación envíe notificaciones para mostrar el progreso de la descarga?</string>
+
+    <!-- RPA Extraction -->
+    <string name="action_extract">Extraer</string>
+    <string name="extract_rpa_title">Extraer RPA</string>
+    <string name="confirm_extract_message">¿Quieres extraer %1$s? Esto podría tardar un poco.</string>
+    <string name="extracting">Extrayendo…</string>
+    <string name="extraction_completed">Extracción completada</string>
+    <string name="extraction_error">Error de extracción: %1$s</string>
+    <string name="launcher_download_center">Centro de Descargas</string>
+    <string name="extra_content_title">Contenido Extra</string>
+    <string name="extra_content_prompt">¿Qué deseas instalar?</string>
+    <string name="extra_content_option_install_sprites">Instalar Sprites</string>
+    <string name="extra_content_option_install_submods">Instalar Submods</string>
+    <string name="spritepack_installer_title">Instalar Sprites</string>
+    <string name="spritepack_installer_info">Selecciona el archivo comprimido (.zip o .rar) que descargaste. No te preocupes por extraer nada, MASL se encarga de acomodar todas las carpetas en su lugar automáticamente.</string>
+    <string name="spritepack_select_archive">Seleccionar Archivo</string>
+    <string name="spritepack_progress_analyzing">Analizando archivo...</string>
+    <string name="spritepack_progress_merging">Acomodando archivos...</string>
+    <string name="spritepack_success_title">¡Instalación Exitosa!</string>
+    <string name="spritepack_success_message">Los nuevos sprites se han añadido correctamente. Estarán disponibles la próxima vez que inicies el juego.</string>
+    <string name="spritepack_incompatible_title">Archivo no compatible</string>
+    <string name="spritepack_incompatible_message">Parece que este archivo no tiene la estructura de un spritepack válido o está dañado. Revisa que sea el archivo correcto.</string>
+    <string name="spritepack_retry">Volver a intentar</string>
+    <string name="spritepack_install_success_toast">Spritepack instalado correctamente.</string>
+    <string name="spritepack_unexpected_error">Falló la instalación: %1$s</string>
+    <string name="spritepack_gift_prompt_title">Archivos gift detectados</string>
+    <string name="spritepack_gift_prompt_message">Se detectaron archivos .gift. ¿Quieres colocarlos en la carpeta characters/?</string>
+    <string name="spritepack_gift_progress">Importando archivos .gift...</string>
+    <string name="spritepack_gift_import_success">Se movieron %1$d archivos .gift a characters/.</string>
+    <string name="spritepack_gift_import_error">Error al importar archivos .gift: %1$s</string>
+    <string name="submod_installer_title">Instalar Submods</string>
+    <string name="submod_installer_info">Selecciona el archivo comprimido (.zip o .rar) que descargaste. MASL validará y colocará automáticamente los archivos del submod en la ruta correcta.</string>
+    <string name="submod_select_archive">Seleccionar Archivo</string>
+    <string name="submod_progress_analyzing">Analizando archivo...</string>
+    <string name="submod_progress_merging">Acomodando archivos...</string>
+    <string name="submod_success_title">¡Instalación Exitosa!</string>
+    <string name="submod_success_message">Los archivos del submod se añadieron correctamente. Estarán disponibles la próxima vez que inicies el juego.</string>
+    <string name="submod_incompatible_title">Archivo no compatible</string>
+    <string name="submod_incompatible_message">Este archivo no parece ser un Submod válido. Si intentas instalar ropa o accesorios, utiliza el Instalador de Sprites.</string>
+    <string name="submod_retry">Volver a intentar</string>
+    <string name="submod_install_success_toast">Submod instalado correctamente.</string>
+    <string name="submod_unexpected_error">Falló la instalación: %1$s</string>
+    
+    <!-- Download Center Strings -->
+    <string name="download_center_title">Centro de Descargas</string>
+    <string name="no_updates_found">No se encontraron actualizaciones o error de conexión</string>
+    <string name="download_in_progress">Otra descarga está en curso</string>
+    <string name="update_installed">%1$s instalado exitosamente</string>
+    <string name="installation_failed">Instalación fallida: %1$s</string>
+    <string name="update_current_version">Actual: %1$s -> Nueva: %2$s (%3$s)</string>
+    <string name="btn_update">Actualizar</string>
+    <string name="btn_reinstall">Reinstalar</string>
+    <string name="status_downloading">Descargando...</string>
+    <string name="status_installing">Instalando...</string>
+    <string name="download_failed_error">Descarga fallida: %1$s</string>
+    <string name="wifi_only_label">Descargar solo con Wi-Fi</string>
+    <string name="download_center_update_prompt_title">Actualizaciones disponibles</string>
+    <string name="download_center_update_prompt_message_single">Hay 1 paquete para actualizar en el Centro de Descargas.</string>
+    <string name="download_center_update_prompt_message_multiple">Hay %1$d paquetes para actualizar en el Centro de Descargas.</string>
+    <string name="data_warning_title">Uso de Datos Móviles</string>
+    <string name="data_warning_message">Estás usando datos móviles. Esta descarga (%1$s) puede generar cargos adicionales. ¿Deseas continuar?</string>
+    <string name="calculating_size">Calculando tamaño...</string>
+
+    <!-- Piano Strings -->
+    <string name="piano_settings">Ajustes</string>
+    <string name="piano_close">Cerrar</string>
+    <string name="piano_size">Tamaño del Teclado</string>
+    <string name="piano_opacity">Opacidad del Teclado</string>
+
+    <!-- File Viewer Strings -->
+    <string name="viewer_error_image_decode">Fallo al decodificar la imagen</string>
+    <string name="viewer_error_file_large">El archivo es demasiado grande para la vista previa (>5MB)</string>
+    <string name="viewer_error_unsupported">Vista previa no disponible para este tipo de archivo</string>
+    <string name="viewer_error_read_failed">Error al leer el archivo: %1$s</string>
+    <string name="viewer_error_audio_failed">Error al reproducir audio: %1$s</string>
+    <string name="viewer_error_video_failed">Error al reproducir video: %1$s</string>
+    <string name="import_folder_completed">Carpeta importada: %1$s</string>
+    <string name="import_folder_failed">Error al importar carpeta: %1$s</string>
+
+    <!-- App Info Strings -->
+    <string name="title_app_info">Información de la App</string>
+    <string name="app_info_credits_port"><![CDATA[Adaptaciones para Android por: <a href="https://github.com/New-Traduction-Club">Traduction Club!</a>]]></string>
+    <string name="app_info_credits_es"><![CDATA[Traducción al Español por: <a href="https://traduction-club.live/">Traduction Club!</a>]]></string>
+    <string name="app_info_credits_pt"><![CDATA[Traducción al Portugués por: <a href="https://discord.gg/DcKhygEtaH">Bach ! (Monika After Story Brasil)</a>]]></string>
+    
+    <string name="app_info_acknowledgments_title">Agradecimientos y Créditos</string>
+    <string name="app_info_acknowledgments_team_salvato"><b>Team Salvato:</b> Por crear el increíble Doki Doki Literature Club!</string>
+    <string name="app_info_acknowledgments_mas_team"><b>Monika After Story Team:</b> Por el mod original y su continuo y arduo trabajo.</string>
+    <string name="app_info_acknowledgments_renpy"><b>Ren\'Py:</b> Por el motor de novela visual y RAPT.</string>
+    <string name="app_info_acknowledgments_lattyware"><b>Lattyware:</b> Por la lógica de unrpa.</string>
+
+    <string name="app_info_commit">Último commit: %1$s</string>
+    <string name="app_info_version">Versión: %1$s</string>
+    <string name="launcher_app_info_desc">Acerca de esta app</string>
+    <string name="documents_provider_root_title">MASL: 6.99 Edition</string>
+    <string name="documents_provider_root_summary">MASL</string>
+    <string name="documents_provider_open_failed">No se pudo abrir el explorador del sistema: %1$s</string>
+    <string name="documents_provider_open_unavailable">No hay un explorador del sistema compatible disponible.</string>
+    <string name="documents_provider_open_action">Abrir en explorador del sistema</string>
+
+    <!-- Wallpapers -->
+    <string name="launcher_wallpapers">Fondos de pantalla</string>
+    <string name="wallpaper_default">Predeterminado</string>
+    <string name="wallpaper_add">Agregar fondo</string>
+    <string name="wallpaper_delete_title">¿Eliminar fondo?</string>
+    <string name="wallpaper_delete_message">Este fondo será eliminado permanentemente.</string>
+    <string name="wallpaper_applied">Fondo aplicado</string>
+    <string name="wallpaper_crop_title">Ajustar fondo</string>
+    <string name="wallpaper_apply">Aplicar</string>
+    <string name="wallpaper_processing_opening">Preparando fondo…</string>
+    <string name="wallpaper_processing_applying">Aplicando fondo…</string>
+    <string name="wallpaper_video_too_large">Este video es demasiado grande para usarse como fondo.</string>
+    <string name="wallpaper_video_resolution_too_high">La resolución de este video es demasiado alta para reproducirse con fluidez como fondo.</string>
+    <string name="wallpaper_video_bitrate_too_high">El bitrate de este video es demasiado alto para reproducirse con fluidez como fondo.</string>
+    <string name="wallpaper_slideshow_status_off">Fondo de Pantalla Aleatorio desactivado</string>
+    <string name="wallpaper_slideshow_configure">Fondo de Pantalla Aleatorio</string>
+    <string name="wallpaper_slideshow_disable">Desactivar</string>
+    <string name="wallpaper_slideshow_status_on">Fondo de Pantalla Aleatorio activo: %1$s</string>
+    <string name="wallpaper_slideshow_selection_count">%1$d fondos</string>
+    <string name="wallpaper_slideshow_trigger_app_toggle">al entrar/salir de la app</string>
+    <string name="wallpaper_slideshow_change_on_app_toggle">Cambiar al entrar/salir de la app</string>
+    <string name="wallpaper_slideshow_title">Fondo de Pantalla Aleatorio</string>
+    <string name="wallpaper_slideshow_save">Guardar</string>
+    <string name="wallpaper_slideshow_applied">Fondo de Pantalla Aleatorio activado</string>
+    <string name="wallpaper_slideshow_disabled">Fondo de Pantalla Aleatorio desactivado</string>
+    <string name="wallpaper_slideshow_select_button">Elegir fondos</string>
+    <string name="wallpaper_slideshow_select_title">Elige los fondos</string>
+    <string name="wallpaper_slideshow_select_apply">Usar selección</string>
+    <string name="wallpaper_slideshow_selection_summary">Seleccionados: %1$d fondos</string>
+    <string name="wallpaper_slideshow_validation_selection">Elige entre 2 y 5 fondos</string>
+    <string name="wallpaper_slideshow_validation_mode">Selecciona al menos una opción de cambio</string>
+    <string name="wallpaper_slideshow_validation_interval">Ingresa un intervalo válido</string>
+    <string name="wallpaper_slideshow_need_more">Agrega al menos dos fondos para usar el modo aleatorio.</string>
+    <string name="wallpaper_slideshow_timed_label">Cambiar con temporizador</string>
+    <string name="wallpaper_slideshow_interval_hint">Valor</string>
+    <string name="wallpaper_slideshow_unit_minutes">Minutos</string>
+    <string name="wallpaper_slideshow_unit_hours">Horas</string>
+    <string name="wallpaper_slideshow_interval_minutes">%1$d min</string>
+    <string name="wallpaper_slideshow_interval_hours">%1$d h</string>
+    <string name="wallpaper_slideshow_selection_hint">Selecciona de 2 a 5 fondos para la función Fondo de Pantalla Aleatorio.</string>
+
+    <string name="window_mode_prompt_title">Elige el estilo de ventana</string>
+    <string name="window_mode_prompt_body">Escoge cómo se muestran las ventanas del Escritorio.</string>
+    <string name="window_mode_apply">Aplicar</string>
+    <string name="window_mode_windowed">Ventana</string>
+    <string name="window_mode_maximized">Maximizado</string>
+    <string name="window_mode_windowed_desc">Enfoque más compacto.</string>
+    <string name="window_mode_maximized_desc">Ventana a tamaño completo.</string>
+    <string name="settings_window_mode_title">Modo de ventana</string>
+    <string name="settings_window_mode_desc">Cambiar entre Ventana o Maximizado.</string>
+
+    <!-- Update Feature Strings -->
+    <string name="update_window_title">Gestor de Actualizaciones</string>
+    <string name="update_status_initializing">Iniciando actualización...</string>
+    <string name="update_status_downloading">Descargando actualización...</string>
+    <string name="update_status_verifying">Verificando actualización...</string>
+    <string name="update_status_installing">Instalando actualización...</string>
+    <string name="update_status_complete">¡Actualización completada!</string>
+    <string name="update_status_failed">Actualización fallida</string>
+    <string name="update_progress_percent">%1$d%%</string>
+    <string name="update_progress_error">Error</string>
+    <string name="update_desc_wait">Por favor, no cierres esta ventana hasta que la actualización haya terminado.</string>
+    <string name="update_desc_finished">El juego ha sido actualizado. Ya puedes cerrar esta ventana.</string>
+    <string name="update_error_no_package">Error: No se proporcionó información del paquete</string>
+    <string name="update_error_checksum">La verificación de la suma de comprobación falló. La descarga podría estar corrupta.</string>
+    <string name="update_error_file_not_found">Archivo de actualización no encontrado</string>
+    <string name="update_dialog_title">Actualización en curso</string>
+    <string name="update_dialog_warning">La actualización se está ejecutando. Cerrar esta ventana ahora podría corromper los archivos del juego. Por favor, espera a que termine.</string>
+    <string name="update_select_version_title">Seleccionar versión de actualización</string>
+    <string name="update_error_fetch_failed">No se pudieron obtener las actualizaciones disponibles.</string>
+
+    <!-- Toolbox -->
+    <string name="toolbox_title">Toolbox</string>
+    <string name="tool_virtual_keyboard">Teclado Virtual</string>
+
+    <string name="btn_start">Inicio</string>
+    <string name="toolbox_swipe_tip">Consejo: Desliza desde el borde izquierdo para abrir la Toolbox</string>
+    <string name="tool_window_controller">Ventana</string>
+    <string name="renpy_window_mode_title">Modo de Ventana</string>
+    <string name="renpy_window_mode_windowed">Ventana</string>
+    <string name="renpy_window_mode_fullscreen">Pantalla completa</string>
+
+    <string name="notification_title_notifications">Notificaciones</string>
+    <string name="notification_clear_all">Borrar todo</string>
+    <string name="notification_no_new_notifications">Sin notificaciones</string>
+    <string name="game_notification_channel_name">JN Notifications</string>
+    <string name="game_notification_channel_desc">Notificaciones de Monika</string>
+    <string name="game_notification_default_title">Monika</string>
+    <string name="game_notification_default_message">Monika está esperando...</string>
+</resources>
