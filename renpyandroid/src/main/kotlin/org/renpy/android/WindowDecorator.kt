@@ -18,9 +18,21 @@ class WindowDecorator(private val activity: Activity) {
         get() = isWindowMinimized
     private var preMinimizeParams: WindowManager.LayoutParams? = null
     private var windowRootLayout: ViewGroup? = null
+    private var txtWindowTitle: TextView? = null
     
     private val activityId: String = activity::class.java.name
-    private val activityName: String = "Monika After Story"
+    @Volatile
+    private var activityName: String = "Monika After Story"
+
+    fun setWindowTitle(title: String) {
+        activityName = title
+        activity.runOnUiThread {
+            txtWindowTitle?.text = title
+        }
+        if (!isWindowMinimized) {
+            notifyState("RUNNING")
+        }
+    }
 
     fun isWindowedMode(): Boolean {
         val prefs = activity.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
@@ -33,11 +45,12 @@ class WindowDecorator(private val activity: Activity) {
         windowRootLayout = root
 
         val contentContainer = root.findViewById<FrameLayout>(R.id.windowContent)
-        val txtWindowTitle = root.findViewById<TextView>(R.id.txtWindowTitle)
+        txtWindowTitle = root.findViewById<TextView>(R.id.txtWindowTitle)
         val btnWindowClose = root.findViewById<View>(R.id.btnWindowClose)
 
-        txtWindowTitle.text = windowTitle
-        txtWindowTitle.textSize = 12f
+        txtWindowTitle?.text = windowTitle
+        activityName = windowTitle
+        txtWindowTitle?.textSize = 12f
         contentContainer.addView(view)
 
         val footerBar = root.findViewById<View>(R.id.footerBar)

@@ -1011,4 +1011,21 @@ public class PythonSDLActivity extends SDLActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        if (mWindowDecorator != null && title != null) {
+            mWindowDecorator.setWindowTitle(title.toString());
+        }
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        super.setTitle(titleId);
+        String title = getString(titleId);
+        if (mWindowDecorator != null && title != null) {
+            mWindowDecorator.setWindowTitle(title);
+        }
+    }
 }
