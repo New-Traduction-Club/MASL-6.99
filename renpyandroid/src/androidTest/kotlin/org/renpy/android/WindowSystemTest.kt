@@ -56,6 +56,38 @@ class WindowSystemTest {
     }
 
     @Test
+    fun testDesktopWindowManagerActiveWindowName() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        DesktopWindowManager.registerReceiver(context)
+        try {
+            // Active window should default to "Desktop"
+            assertEquals("Desktop", DesktopWindowManager.getActiveWindowName())
+
+            // Simulate state RUNNING
+            DesktopWindowManager.notifyStateChanged(context, "activity_1", "Test Activity", "RUNNING")
+            SystemClock.sleep(200)
+            assertEquals("Test Activity", DesktopWindowManager.getActiveWindowName())
+
+            // Simulate "Another Activity" starting
+            DesktopWindowManager.notifyStateChanged(context, "activity_2", "Another Activity", "RUNNING")
+            SystemClock.sleep(200)
+            assertEquals("Another Activity", DesktopWindowManager.getActiveWindowName())
+
+            // Simulate "Another Activity" minimizing
+            DesktopWindowManager.notifyStateChanged(context, "activity_2", "Another Activity", "MINIMIZED")
+            SystemClock.sleep(200)
+            assertEquals("Test Activity", DesktopWindowManager.getActiveWindowName())
+
+            // Simulate "Test Activity" being destroyed
+            DesktopWindowManager.notifyStateChanged(context, "activity_1", "Test Activity", "DESTROYED")
+            SystemClock.sleep(200)
+            assertEquals("Desktop", DesktopWindowManager.getActiveWindowName())
+        } finally {
+            DesktopWindowManager.unregisterReceiver(context)
+        }
+    }
+
+    @Test
     fun testMinimizeAndRestoreCommands() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val prefs = context.getSharedPreferences(BaseActivity.PREFS_NAME, Context.MODE_PRIVATE)

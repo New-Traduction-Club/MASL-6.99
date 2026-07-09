@@ -519,6 +519,8 @@ public class PythonSDLActivity extends SDLActivity {
             registerReceiver(mNotificationReceiver, notifFilter);
         }
 
+        DesktopWindowManager.registerReceiver(this);
+
         Log.v("python", "onCreate() finished, mLayout initialized");
     }
 
@@ -574,6 +576,9 @@ public class PythonSDLActivity extends SDLActivity {
         } catch (Exception e) {}
         try {
             unregisterReceiver(mNotificationReceiver);
+        } catch (Exception e) {}
+        try {
+            DesktopWindowManager.unregisterReceiver(this);
         } catch (Exception e) {}
 
         DiscordRpcManager.stop();

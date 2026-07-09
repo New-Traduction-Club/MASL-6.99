@@ -34,4 +34,63 @@ object DesktopWindowManager {
         }
         context.sendBroadcast(intent)
     }
+
+    private val runningApps = java.util.Collections.synchronizedMap(mutableMapOf<String, Pair<String, String>>()) // id -> Pair(name, state)
+    @Volatile
+    private var lastFocusedAppId: String? = null
+
+    private val windowStateReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == ACTION_WINDOW_STATE_CHANGED) {
+                val id = intent.getStringExtra(EXTRA_ACTIVITY_ID) ?: return
+                val name = intent.getStringExtra(EXTRA_ACTIVITY_NAME) ?: "App"
+                val state = intent.getStringExtra(EXTRA_STATE) ?: return
+
+                if (state == "DESTROYED") {
+                    runningApps.remove(id)
+                    if (lastFocusedAppId == id) {
+                        lastFocusedAppId = runningApps.entries.lastOrNull { it.value.second == "RUNNING" }?.key
+                    }
+                } else {
+                    runningApps[id] = Pair(name, state)
+                    if (state == "RUNNING") {
+                        lastFocusedAppId = id
+                    } else if (lastFocusedAppId == id) {
+                        lastFocusedAppId = runningApps.entries.lastOrNull { it.value.second == "RUNNING" }?.key
+                    }
+                }
+            }
+        }
+    }
+
+    private var isReceiverRegistered = false
+
+    @JvmStatic
+    fun registerReceiver(context: Context) {
+        if (isReceiverRegistered) return
+        val filter = android.content.IntentFilter(ACTION_WINDOW_STATE_CHANGED)
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            context.registerReceiver(windowStateReceiver, filter, Context.RECEIVER_EXPORTED)
+        } else {
+            context.registerReceiver(windowStateReceiver, filter)
+        }
+        isReceiverRegistered = true
+    }
+
+    @JvmStatic
+    fun unregisterReceiver(context: Context) {
+        if (!isReceiverRegistered) return
+        try {
+            context.unregisterReceiver(windowStateReceiver)
+        } catch (e: Exception) {}
+        isReceiverRegistered = false
+    }
+
+    @JvmStatic
+    fun getActiveWindowName(): String {
+        val currentId = lastFocusedAppId ?: return "Desktop"
+        val appPair = runningApps[currentId] ?: return "Desktop"
+        if (appPair.second != "RUNNING") return "Desktop"
+        return appPair.first
+    }
 }
