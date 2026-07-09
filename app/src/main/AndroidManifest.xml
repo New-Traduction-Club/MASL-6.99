@@ -58,6 +58,26 @@
       android:launchMode="singleTop"
       android:supportsPictureInPicture="true" />
 
+    <activity
+      android:name="org.renpy.android.PythonSDLActivity2"
+      android:exported="false"
+      android:process=":renpy2"
+      android:theme="@style/Theme.GameWindow"
+      android:alwaysRetainTaskState="true"
+      android:configChanges="layoutDirection|locale|orientation|uiMode|screenLayout|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+      android:launchMode="singleTop"
+      android:supportsPictureInPicture="true" />
+
+    <activity
+      android:name="org.renpy.android.PythonSDLActivity3"
+      android:exported="false"
+      android:process=":renpy3"
+      android:theme="@style/Theme.GameWindow"
+      android:alwaysRetainTaskState="true"
+      android:configChanges="layoutDirection|locale|orientation|uiMode|screenLayout|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation"
+      android:launchMode="singleTop"
+      android:supportsPictureInPicture="true" />
+
 
 
     <activity android:name="org.renpy.android.UpdateWindowActivity" android:exported="false" android:theme="@style/Theme.DesktopActivityWindow"/>
@@ -66,6 +86,7 @@
     <activity android:name="org.renpy.android.SpritepackInstallerActivity" android:exported="false" android:theme="@style/Theme.DesktopActivityWindow"/>
     <activity android:name="org.renpy.android.SubmodInstallerActivity" android:exported="false" android:theme="@style/Theme.DesktopActivityWindow"/>
     <activity android:name="org.renpy.android.AppInfoActivity" android:exported="false" android:theme="@style/Theme.DesktopActivityWindow"/>
+    <activity android:name="org.renpy.android.ExperimentsActivity" android:exported="false" android:theme="@style/Theme.DesktopActivityWindow"/>
     <activity android:name="org.renpy.android.BackupsActivity" android:exported="false" android:theme="@style/Theme.DesktopActivityWindow"/>
     <activity android:name="org.renpy.android.WallpapersActivity" android:exported="false" android:theme="@style/Theme.DesktopActivityWindow"/>
     <activity

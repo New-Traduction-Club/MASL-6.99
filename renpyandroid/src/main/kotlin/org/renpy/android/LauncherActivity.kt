@@ -171,8 +171,8 @@ class LauncherActivity : BaseActivity() {
                     } else if (lastFocusedAppId == id) {
                         lastFocusedAppId = runningApps.keys.lastOrNull { runningApps[it]?.state == "RUNNING" }
                     }
-                    if (id == "org.renpy.android.PythonSDLActivity") {
-                        startRenpyProcessMonitoring()
+                    if (id.startsWith("org.renpy.android.PythonSDLActivity")) {
+                        startRenpyProcessMonitoring(id)
                     }
                 }
                 updateTaskbarApps()
@@ -180,16 +180,24 @@ class LauncherActivity : BaseActivity() {
         }
     }
 
-    private fun startRenpyProcessMonitoring() {
-        if (renpyMonitorJob?.isActive == true) return
-        renpyMonitorJob = lifecycleScope.launch {
-            val renpyProcessName = "$packageName:renpy"
+    private val renpyMonitorJobs = mutableMapOf<String, kotlinx.coroutines.Job>()
+
+    private fun startRenpyProcessMonitoring(activityId: String) {
+        if (renpyMonitorJobs[activityId]?.isActive == true) return
+        val suffix = when (activityId) {
+            "org.renpy.android.PythonSDLActivity" -> "renpy"
+            "org.renpy.android.PythonSDLActivity2" -> "renpy2"
+            "org.renpy.android.PythonSDLActivity3" -> "renpy3"
+            else -> "renpy"
+        }
+        val renpyProcessName = "$packageName:$suffix"
+        renpyMonitorJobs[activityId] = lifecycleScope.launch {
             while (true) {
                 kotlinx.coroutines.delay(1000)
                 if (!isProcessRunning(renpyProcessName)) {
-                    if (runningApps.containsKey("org.renpy.android.PythonSDLActivity")) {
-                        runningApps.remove("org.renpy.android.PythonSDLActivity")
-                        if (lastFocusedAppId == "org.renpy.android.PythonSDLActivity") {
+                    if (runningApps.containsKey(activityId)) {
+                        runningApps.remove(activityId)
+                        if (lastFocusedAppId == activityId) {
                             lastFocusedAppId = runningApps.keys.lastOrNull { runningApps[it]?.state == "RUNNING" }
                         }
                         updateTaskbarApps()
@@ -212,12 +220,23 @@ class LauncherActivity : BaseActivity() {
     }
 
     private fun bringRunningActivitiesToFront() {
-        val renpyProcessName = "$packageName:renpy"
-        if (runningApps.containsKey("org.renpy.android.PythonSDLActivity") && !isProcessRunning(renpyProcessName)) {
-            runningApps.remove("org.renpy.android.PythonSDLActivity")
-            if (lastFocusedAppId == "org.renpy.android.PythonSDLActivity") {
-                lastFocusedAppId = runningApps.keys.lastOrNull { runningApps[it]?.state == "RUNNING" }
+        val processesToCheck = listOf(
+            "org.renpy.android.PythonSDLActivity" to "renpy",
+            "org.renpy.android.PythonSDLActivity2" to "renpy2",
+            "org.renpy.android.PythonSDLActivity3" to "renpy3"
+        )
+        var anyRemoved = false
+        for ((actId, suffix) in processesToCheck) {
+            val processName = "$packageName:$suffix"
+            if (runningApps.containsKey(actId) && !isProcessRunning(processName)) {
+                runningApps.remove(actId)
+                if (lastFocusedAppId == actId) {
+                    lastFocusedAppId = runningApps.keys.lastOrNull { runningApps[it]?.state == "RUNNING" }
+                }
+                anyRemoved = true
             }
+        }
+        if (anyRemoved) {
             updateTaskbarApps()
         }
 
@@ -229,7 +248,7 @@ class LauncherActivity : BaseActivity() {
 
         for (id in runningIds) {
             if (id != lastFocusedAppId) {
-                if (id == "org.renpy.android.PythonSDLActivity" || ActiveActivityRegistry.activeActivities.contains(id)) {
+                if (id.startsWith("org.renpy.android.PythonSDLActivity") || ActiveActivityRegistry.activeActivities.contains(id)) {
                     bringToFront(id)
                 }
             }
@@ -237,7 +256,7 @@ class LauncherActivity : BaseActivity() {
 
         lastFocusedAppId?.let { id ->
             if (runningIds.contains(id)) {
-                if (id == "org.renpy.android.PythonSDLActivity" || ActiveActivityRegistry.activeActivities.contains(id)) {
+                if (id.startsWith("org.renpy.android.PythonSDLActivity") || ActiveActivityRegistry.activeActivities.contains(id)) {
                     bringToFront(id)
                 }
             }
@@ -651,7 +670,8 @@ class LauncherActivity : BaseActivity() {
             // DesktopShortcut(R.string.launcher_discord_rpc, android.R.drawable.stat_notify_chat, "discord_rpc"),
             DesktopShortcut(R.string.launcher_backups, R.drawable.ic_launcher_backup, "backups"),
             DesktopShortcut(R.string.launcher_wallpapers, R.drawable.ic_launcher_wallpaper, "wallpapers"),
-            DesktopShortcut(R.string.title_app_info, android.R.drawable.ic_menu_info_details, "app_info")
+            DesktopShortcut(R.string.title_app_info, android.R.drawable.ic_menu_info_details, "app_info"),
+            DesktopShortcut(R.string.title_experiments, android.R.drawable.ic_menu_compass, "experiments")
         )
     }
 
@@ -1088,6 +1108,12 @@ class LauncherActivity : BaseActivity() {
                 }
                 launchActivityWindow(intent, AppInfoActivity::class.java.name)
             }
+            "experiments" -> {
+                val intent = Intent(this, ExperimentsActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                }
+                launchActivityWindow(intent, ExperimentsActivity::class.java.name)
+            }
         }
     }
 
@@ -1261,7 +1287,7 @@ class LauncherActivity : BaseActivity() {
     }
 
     private fun removeUtf8CodingDeclarationsInPythonPackages() {
-        val pythonPackagesDir = File(filesDir, "game/python-packages")
+        val pythonPackagesDir = File(filesDir, "monikaafterstory-masl-edition/game/python-packages")
         if (!pythonPackagesDir.isDirectory) return
 
         pythonPackagesDir.walkTopDown()
@@ -1317,6 +1343,7 @@ class LauncherActivity : BaseActivity() {
                 }
                 val intent = Intent(this@LauncherActivity, PythonSDLActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                    putExtra("base_dir", "monikaafterstory-masl-edition")
                 }
                 launchActivityWindow(intent, PythonSDLActivity::class.java.name)
             }
@@ -1325,12 +1352,13 @@ class LauncherActivity : BaseActivity() {
 
     @Throws(IOException::class)
     private fun ensureAndroidMasbaseBootstrapScript() {
-        val gameDir = File(filesDir, "game")
+        val installDir = File(filesDir, "monikaafterstory-masl-edition")
+        val gameDir = File(installDir, "game")
         if (!gameDir.exists() && !gameDir.mkdirs()) {
             throw IOException("Unable to create game directory")
         }
 
-        val escapedBasePath = filesDir.absolutePath
+        val escapedBasePath = installDir.absolutePath
             .replace("\\", "\\\\")
             .replace("\"", "\\\"")
         val bootstrapScript = """
@@ -1347,7 +1375,7 @@ class LauncherActivity : BaseActivity() {
 
     private fun createLanguageFile(language: String) {
         try {
-            val gameDir = File(filesDir, "game")
+            val gameDir = File(filesDir, "monikaafterstory-masl-edition/game")
             if (!gameDir.exists()) {
                 gameDir.mkdirs()
             }

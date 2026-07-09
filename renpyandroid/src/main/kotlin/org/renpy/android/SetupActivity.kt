@@ -519,7 +519,8 @@ class SetupActivity : BaseActivity() {
     }
 
     private suspend fun processInstallation() {
-        val gameDir = File(filesDir, "game")
+        val installDir = File(filesDir, "monikaafterstory-masl-edition")
+        val gameDir = File(installDir, "game")
         if (!gameDir.exists()) gameDir.mkdirs()
 
         // Verify and Extract DDLC
@@ -590,7 +591,7 @@ class SetupActivity : BaseActivity() {
                     val name = entry.name
                     
                     if (name.startsWith("game/") || name.startsWith("characters/")) {
-                        val targetFile = File(filesDir, name)
+                        val targetFile = File(installDir, name)
                         
                         if (entry.isDirectory) {
                             targetFile.mkdirs()

@@ -382,19 +382,29 @@ public class PythonSDLActivity extends SDLActivity {
             externalStorage = oldExternalStorage;
         }
 
-        File externalGameDir = new File(externalStorage, "game");
-        if (externalGameDir.exists() && externalGameDir.isDirectory()) {
-            path = externalStorage;
-        } else if (resourceManager.getString("public_version") != null) {
-            path = externalStorage;
+        String customBaseDir = getIntent().getStringExtra("base_dir");
+        if (customBaseDir != null && !customBaseDir.isEmpty()) {
+            File testPath = new File(customBaseDir);
+            if (testPath.isAbsolute()) {
+                path = testPath;
+            } else {
+                path = new File(getFilesDir(), customBaseDir);
+            }
         } else {
-            path = getFilesDir();
+            File externalGameDir = new File(externalStorage, "game");
+            if (externalGameDir.exists() && externalGameDir.isDirectory()) {
+                path = externalStorage;
+            } else if (resourceManager.getString("public_version") != null) {
+                path = externalStorage;
+            } else {
+                path = getFilesDir();
+            }
         }
 
         long unpackStart = System.currentTimeMillis();
         String privateVersion = resourceManager.getString("private_version");
         if (privateVersion != null) {
-            unpackData("private", getFilesDir(), privateVersion);
+            unpackData("private", path, privateVersion);
         }
         String publicVersion = resourceManager.getString("public_version");
         if (publicVersion != null) {
@@ -403,10 +413,15 @@ public class PythonSDLActivity extends SDLActivity {
         Log.v("python", "unpackData finished. Duration: " + (System.currentTimeMillis() - unpackStart) + "ms");
 
         nativeSetEnv("ANDROID_ARGUMENT", path.getAbsolutePath());
-        nativeSetEnv("ANDROID_PRIVATE", getFilesDir().getAbsolutePath());
-        nativeSetEnv("ANDROID_MASBASE", getFilesDir().getAbsolutePath());
-        nativeSetEnv("ANDROID_PUBLIC",  externalStorage.getAbsolutePath());
-        nativeSetEnv("ANDROID_OLD_PUBLIC", oldExternalStorage.getAbsolutePath());
+        nativeSetEnv("ANDROID_PRIVATE", path.getAbsolutePath());
+        nativeSetEnv("ANDROID_MASBASE", path.getAbsolutePath());
+        if (customBaseDir != null && !customBaseDir.isEmpty() && !customBaseDir.equals("monikaafterstory-masl-edition")) {
+            nativeSetEnv("ANDROID_PUBLIC", path.getAbsolutePath());
+            nativeSetEnv("ANDROID_OLD_PUBLIC", path.getAbsolutePath());
+        } else {
+            nativeSetEnv("ANDROID_PUBLIC",  externalStorage.getAbsolutePath());
+            nativeSetEnv("ANDROID_OLD_PUBLIC", oldExternalStorage.getAbsolutePath());
+        }
 
         // Figure out the APK path.
         String apkFilePath;
@@ -428,12 +443,14 @@ public class PythonSDLActivity extends SDLActivity {
         }
 
         nativeSetEnv("PYTHONOPTIMIZE", "2");
-        nativeSetEnv("PYTHONHOME", getFilesDir().getAbsolutePath());
-        nativeSetEnv("PYTHONPATH", path.getAbsolutePath() + ":" + getFilesDir().getAbsolutePath() + "/lib");
+        nativeSetEnv("PYTHONHOME", path.getAbsolutePath());
+        nativeSetEnv("PYTHONPATH", path.getAbsolutePath() + ":" + path.getAbsolutePath() + "/lib");
 
         Log.v("python", "Finished preparePython. Total Duration: " + (System.currentTimeMillis() - startTime) + "ms");
 
-    };
+        nativeSetEnv("RENPY_VARIANT", "android");
+
+    }
 
     // App lifecycle.
     public ImageView mPresplash = null;
@@ -486,6 +503,18 @@ public class PythonSDLActivity extends SDLActivity {
         mWindowDecorator = new WindowDecorator(this);
         OrientationPolicy.applyRequestedOrientation(this, ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         super.onCreate(savedInstanceState);
+
+        String customBaseDir = getIntent().getStringExtra("base_dir");
+        if (customBaseDir != null && !customBaseDir.isEmpty() && !customBaseDir.equals("monikaafterstory-masl-edition")) {
+            String displayName = customBaseDir.replace("-", " ").replace("_", " ");
+            StringBuilder sb = new StringBuilder();
+            for (String s : displayName.split(" ")) {
+                if (s.length() > 0) {
+                    sb.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).append(" ");
+                }
+            }
+            setTitle(sb.toString().trim());
+        }
 
         applyImmersiveFullscreen();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {

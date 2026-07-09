@@ -469,4 +469,10 @@
     <string name="game_notification_channel_desc">Notificações da Monika</string>
     <string name="game_notification_default_title">Monika</string>
     <string name="game_notification_default_message">Monika está esperando...</string>
+
+    <!-- Experiments Panel -->
+    <string name="title_experiments">Experimentos</string>
+    <string name="experiments_description">Selecione e inicie outros jogos do Ren\'Py.</string>
+    <string name="experiments_no_games">Nenhum outro jogo detectado. Coloque as pastas do jogo em files/&lt;pasta&gt;/game/</string>
+    <string name="experiments_launch">Iniciar</string>
 </resources>

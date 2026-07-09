@@ -453,4 +453,10 @@
     <string name="game_notification_channel_desc">Notifications from Monika</string>
     <string name="game_notification_default_title">Monika</string>
     <string name="game_notification_default_message">Monika is waiting...</string>
+
+    <!-- Experiments Panel -->
+    <string name="title_experiments">Experiments</string>
+    <string name="experiments_description">Select and launch other Ren\'Py games found.</string>
+    <string name="experiments_no_games">No other Ren\'Py games detected. Place game folders under InternalFiles/&lt;folder&gt;/game/</string>
+    <string name="experiments_launch">Launch</string>
 </resources>
