@@ -436,11 +436,11 @@
     <string name="installation_failed">Installation error: %1$s</string>
 
     <!-- Toolbox -->
-    <string name="toolbox_title">Toolbox</string>
+    <string name="toolbox_title">Afterbox</string>
     <string name="tool_virtual_keyboard">Virtual Keyboard</string>
 
     <string name="btn_start">Start</string>
-    <string name="toolbox_swipe_tip">Tip: Swipe from the left edge to open the Toolbox</string>
+    <string name="toolbox_swipe_tip">Tip: Swipe from the left edge to open the Afterbox</string>
     <string name="tool_window_controller">Window Controller</string>
     <string name="renpy_window_mode_title">Game Window Mode</string>
     <string name="renpy_window_mode_windowed">Windowed</string>

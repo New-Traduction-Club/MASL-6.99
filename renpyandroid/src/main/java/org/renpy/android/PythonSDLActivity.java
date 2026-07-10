@@ -551,6 +551,7 @@ public class PythonSDLActivity extends SDLActivity {
         DesktopWindowManager.registerReceiver(this);
 
         Log.v("python", "onCreate() finished, mLayout initialized");
+        InAppNotifier.show(activity, activity.getString(R.string.toolbox_swipe_tip), true);
     }
 
     /**
@@ -580,7 +581,6 @@ public class PythonSDLActivity extends SDLActivity {
 
                 activity.applyImmersiveFullscreen();
                 ToolboxManager.initialize(activity);
-                InAppNotifier.show(activity, activity.getString(R.string.toolbox_swipe_tip), true);
             }
         });
     }
