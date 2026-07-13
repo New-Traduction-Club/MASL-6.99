@@ -551,7 +551,7 @@ public class PythonSDLActivity extends SDLActivity {
         DesktopWindowManager.registerReceiver(this);
 
         Log.v("python", "onCreate() finished, mLayout initialized");
-        InAppNotifier.show(activity, activity.getString(R.string.toolbox_swipe_tip), true);
+        InAppNotifier.show(this, R.string.toolbox_swipe_tip, true);
     }
 
     /**
