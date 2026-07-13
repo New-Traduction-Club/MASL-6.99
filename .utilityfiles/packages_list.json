@@ -1,6 +1,12 @@
 {
   "packages": [
     {
+      "version": "v0.12.18-beta2",
+      "download_url": "https://github.com/New-Traduction-Club/MonikaModDev-Unofficial-Android/releases/download/v0.12.18-beta2/mas-0.12.18-android-unofficial-beta2.zip",
+      "sha256": "970b2307b96c66d5b67abc8d957390c91bd298f57495a07ac4fc69f9194fda48",
+      "min_app_version": 1
+    },
+    {
       "version": "dummy",
       "download_url": "https://files.traduction-club.live/dummy.zip",
       "sha256": "cbb11873cc3b865902e5eaf07272191307f43bf4d34012b72bb5c38019f6cf98",
