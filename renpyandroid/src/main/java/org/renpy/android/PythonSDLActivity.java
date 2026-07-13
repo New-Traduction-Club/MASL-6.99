@@ -415,6 +415,8 @@ public class PythonSDLActivity extends SDLActivity {
         nativeSetEnv("ANDROID_ARGUMENT", path.getAbsolutePath());
         nativeSetEnv("ANDROID_PRIVATE", path.getAbsolutePath());
         nativeSetEnv("ANDROID_MASBASE", path.getAbsolutePath());
+        nativeSetEnv("REQUESTS_CA_BUNDLE", path.getAbsolutePath() + "/game/python-packages/certifi/cacert.pem");
+        nativeSetEnv("SSL_CERT_FILE", path.getAbsolutePath() + "/game/python-packages/certifi/cacert.pem");
         if (customBaseDir != null && !customBaseDir.isEmpty() && !customBaseDir.equals("monikaafterstory-masl-edition")) {
             nativeSetEnv("ANDROID_PUBLIC", path.getAbsolutePath());
             nativeSetEnv("ANDROID_OLD_PUBLIC", path.getAbsolutePath());
