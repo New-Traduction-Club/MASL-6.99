@@ -12,13 +12,13 @@ localProperties.load(new FileInputStream(localPropertiesFile))
 android {
     compileSdkVersion 35
 
-    namespace "com.test.mas"
+    namespace "com.z.masl699.by.tdclub"
 
     defaultConfig {
-        applicationId "com.test.mas"
+        applicationId "com.z.masl699.by.tdclub"
         minSdkVersion 21
         targetSdkVersion 35
-        versionCode 1
+        versionCode 2
         versionName "0.0.1"
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86_64"

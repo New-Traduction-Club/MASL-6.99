@@ -1048,7 +1048,7 @@ class LauncherActivity : BaseActivity() {
                     .setMessage(getString(R.string.launcher_export_message))
                     .setPositiveButton(getString(R.string.launcher_proceed)) { _, _ ->
                         val date = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-                        val fileName = "saves_backup_jn_$date.zip"
+                        val fileName = "saves_backup_mas_$date.zip"
                         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
                         intent.addCategory(Intent.CATEGORY_OPENABLE)
                         intent.type = "application/zip"
