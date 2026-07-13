@@ -1011,6 +1011,90 @@ class LauncherActivity : BaseActivity() {
         }
     }
 
+    private fun checkLanguageAndStartGame() {
+        val prefs = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val language = prefs.getString("language", "English") ?: "English"
+        val skipWarning = prefs.getBoolean("skip_language_warning", false)
+
+        if (language == "English" || skipWarning) {
+            viewModel.handlePlayClick()
+            return
+        }
+
+        val titleText = when (language) {
+            "Español" -> "Aviso de idioma"
+            "Português" -> "Aviso de idioma"
+            else -> "Language Warning"
+        }
+        
+        val messageText = when (language) {
+            "Español" -> "Aviso: El soporte para español en MAS se limita a lo básico, si encuentras contenido en inglés, favor de no reportarlo. Usar la versión de MASL de la Play Store si tu prioridad es la traducción y no el uso de Ren'Py 6.99 de esta edición de MASL.\n\nPodrás cambiar el idioma dentro del juego en el apartado de Ajustes."
+            "Português" -> "Aviso: O MASL 6.99 não possui suporte nativo para português na sua versão do MAS. Por favor, considere mudar para o MASL da Play Store ou instalar a tradução em português do MAS Brasil usando a função Experimentos."
+            else -> ""
+        }
+        
+        val checkBoxText = when (language) {
+            "Español" -> "No volver a mostrar"
+            "Português" -> "Não mostrar novamente"
+            else -> "Don't show again"
+        }
+        
+        val okButtonText = when (language) {
+            "Español" -> "Vale"
+            "Português" -> "Entendido"
+            else -> "OK"
+        }
+
+        val scrollContainer = android.widget.ScrollView(this).apply {
+            layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+        }
+
+        val textView = TextView(this).apply {
+            text = messageText
+            setTextColor(androidx.core.content.ContextCompat.getColor(this@LauncherActivity, R.color.colorTextPrimary))
+            textSize = 14f
+        }
+        container.addView(textView)
+
+        val spacer = View(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                dpToPx(12)
+            )
+        }
+        container.addView(spacer)
+
+        val checkBox = android.widget.CheckBox(this).apply {
+            text = checkBoxText
+            setTextColor(androidx.core.content.ContextCompat.getColor(this@LauncherActivity, R.color.colorTextPrimary))
+            textSize = 14f
+            val tintColor = androidx.core.content.ContextCompat.getColor(this@LauncherActivity, R.color.colorPrimary)
+            androidx.core.widget.CompoundButtonCompat.setButtonTintList(this, android.content.res.ColorStateList.valueOf(tintColor))
+        }
+        container.addView(checkBox)
+
+        scrollContainer.addView(container)
+
+        GameDialogBuilder(this)
+            .setTitle(titleText)
+            .setView(scrollContainer)
+            .setPositiveButton(okButtonText) { _, _ ->
+                if (checkBox.isChecked) {
+                    prefs.edit().putBoolean("skip_language_warning", true).apply()
+                }
+                viewModel.handlePlayClick()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
     private fun handleShortcutExecution(shortcut: DesktopShortcut) {
         if (shortcut.actionId == "toggle_expand") {
             isStartMenuExpanded = !isStartMenuExpanded
@@ -1024,7 +1108,7 @@ class LauncherActivity : BaseActivity() {
         
         when (shortcut.actionId) {
             "start_game" -> {
-                viewModel.handlePlayClick()
+                checkLanguageAndStartGame()
             }
             "update_game" -> {
                 handleUpdateGame()
