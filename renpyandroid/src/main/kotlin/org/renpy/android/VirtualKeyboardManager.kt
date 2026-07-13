@@ -27,18 +27,55 @@ object VirtualKeyboardManager {
     private var isCtrlActive = false
     private var isAltActive = false
 
+    private var isAccentPending = false
+    private var isDieresisPending = false
+
     // map to keep track of key views to update their text labels dynamically
     private val letterKeyViews = mutableMapOf<TextView, String>()
     private val modifierKeyViews = mutableMapOf<String, TextView>()
 
-    private val keyRows = listOf(
+    enum class LayoutMode {
+        ENGLISH,
+        SPANISH,
+        SYMBOLS
+    }
+
+    private var currentLayoutMode = LayoutMode.ENGLISH
+
+    private val enRows = listOf(
         listOf("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"),
         listOf("Esc", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Back"),
         listOf("Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"),
         listOf("Caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter"),
         listOf("Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "↑", "Close"),
-        listOf("Ctrl", "Alt", "Space", "←", "↓", "→")
+        listOf("Ctrl", "Alt", "ES", "?123", "Space", "←", "↓", "→")
     )
+
+    private val esRows = listOf(
+        listOf("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"),
+        listOf("Esc", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "´", "Back"),
+        listOf("Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "¡", "¿", "\\"),
+        listOf("Caps", "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ", "'", "Enter"),
+        listOf("Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "?", "↑", "Close"),
+        listOf("Ctrl", "Alt", "EN", "?123", "Space", "←", "↓", "→")
+    )
+
+    private val symRows = listOf(
+        listOf("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12"),
+        listOf("Esc", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Back"),
+        listOf("Tab", "{", "}", "[", "]", "<", ">", "|", "\\", "/", "?", "¿", "¡", "~"),
+        listOf("Caps", "`", "\"", ";", ":", "=", "-", "_", "'", "€", "£", "¥", "Enter"),
+        listOf("Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "↑", "Close"),
+        listOf("Ctrl", "Alt", "EN", "ES", "Space", "←", "↓", "→")
+    )
+
+    private fun getKeyRows(): List<List<String>> {
+        return when (currentLayoutMode) {
+            LayoutMode.ENGLISH -> enRows
+            LayoutMode.SPANISH -> esRows
+            LayoutMode.SYMBOLS -> symRows
+        }
+    }
 
     @JvmStatic
     fun showKeyboard(activity: PythonSDLActivity) {
@@ -52,6 +89,11 @@ object VirtualKeyboardManager {
                 "Español" -> java.util.Locale("es")
                 "Português" -> java.util.Locale("pt")
                 else -> java.util.Locale.ENGLISH
+            }
+
+            currentLayoutMode = when (language) {
+                "Español" -> LayoutMode.SPANISH
+                else -> LayoutMode.ENGLISH
             }
 
             val baseConfig = activity.resources.configuration
@@ -70,7 +112,6 @@ object VirtualKeyboardManager {
             val view = themedInflater.inflate(R.layout.virtual_keyboard, activity.mFrameLayout, false)
             keyboardView = view
 
-            // focus-blocking and system UI visibility setup
             view.isFocusable = false
             view.isFocusableInTouchMode = false
             (view as? ViewGroup)?.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
@@ -104,12 +145,12 @@ object VirtualKeyboardManager {
                 }
             }
 
-            // drag-to-move listener on bottom handle with screen-boundary clamping
             setupDragListener(view, keyboardDrawer, dragHandleContainer)
 
-            // generate Keys
             letterKeyViews.clear()
             modifierKeyViews.clear()
+            isAccentPending = false
+            isDieresisPending = false
             buildKeysLayout(themedInflater, themedContext, activity, rowsContainer)
 
             updateKeysVisuals(themedContext)
@@ -117,7 +158,6 @@ object VirtualKeyboardManager {
             activity.mFrameLayout.addView(view)
             activity.applyImmersiveFullscreen()
 
-            // random animation
             keyboardDrawer.alpha = 0f
             keyboardDrawer.scaleY = 0.8f
             keyboardDrawer.animate()
@@ -184,13 +224,28 @@ object VirtualKeyboardManager {
         }
     }
 
+    private fun switchLayout(activity: PythonSDLActivity, newMode: LayoutMode, context: Context) {
+        currentLayoutMode = newMode
+        val view = keyboardView ?: return
+        val rowsContainer = view.findViewById<LinearLayout>(R.id.keyboard_rows_container) ?: return
+        rowsContainer.removeAllViews()
+
+        letterKeyViews.clear()
+        modifierKeyViews.clear()
+
+        val inflater = LayoutInflater.from(context)
+        buildKeysLayout(inflater, context, activity, rowsContainer)
+        updateKeysVisuals(context)
+    }
+
     private fun buildKeysLayout(
         inflater: LayoutInflater,
         context: Context,
         activity: PythonSDLActivity,
         container: LinearLayout
     ) {
-        for (row in keyRows) {
+        val rows = getKeyRows()
+        for (row in rows) {
             val rowLayout = LinearLayout(context).apply {
                 orientation = LinearLayout.HORIZONTAL
                 weightSum = row.sumOf { getKeyWeight(it).toDouble() }.toFloat()
@@ -251,10 +306,66 @@ object VirtualKeyboardManager {
             "CLOSE" -> {
                 hideKeyboard(activity)
             }
+            "EN" -> {
+                switchLayout(activity, LayoutMode.ENGLISH, context)
+            }
+            "ES" -> {
+                switchLayout(activity, LayoutMode.SPANISH, context)
+            }
+            "?123" -> {
+                switchLayout(activity, LayoutMode.SYMBOLS, context)
+            }
+            "SPACE" -> {
+                if (isAccentPending) {
+                    org.libsdl.app.SDLActivity.commitText("´")
+                    isAccentPending = false
+                    updateKeysVisuals(context)
+                } else if (isDieresisPending) {
+                    org.libsdl.app.SDLActivity.commitText("¨")
+                    isDieresisPending = false
+                    updateKeysVisuals(context)
+                }
+                injectKeyEvent(activity, KeyEvent.KEYCODE_SPACE)
+            }
+            "´" -> {
+                isAccentPending = !isAccentPending
+                isDieresisPending = false
+                updateKeysVisuals(context)
+            }
+            "¨" -> {
+                isDieresisPending = !isDieresisPending
+                isAccentPending = false
+                updateKeysVisuals(context)
+            }
             else -> {
-                val code = getKeyCode(keyUpper)
-                if (code != 0) {
-                    injectKeyEvent(activity, code)
+                val isPrintable = key.length == 1 && !isControlKey(keyUpper)
+                if (isPrintable) {
+                    var charToEmit = if (isShiftActive || isCapsLockActive) key.uppercase() else key.lowercase()
+                    if (isAccentPending) {
+                        charToEmit = getAccentedChar(charToEmit)
+                        isAccentPending = false
+                    } else if (isDieresisPending) {
+                        charToEmit = getDieresisChar(charToEmit)
+                        isDieresisPending = false
+                    }
+                    
+                    val committed = org.libsdl.app.SDLActivity.commitText(charToEmit)
+                    if (!committed) {
+                        val code = getKeyCode(keyUpper)
+                        if (code != 0) {
+                            injectKeyEvent(activity, code)
+                        }
+                    } else {
+                        if (isShiftActive) {
+                            isShiftActive = false
+                        }
+                    }
+                    updateKeysVisuals(context)
+                } else {
+                    val code = getKeyCode(keyUpper)
+                    if (code != 0) {
+                        injectKeyEvent(activity, code)
+                    }
                 }
             }
         }
@@ -283,52 +394,44 @@ object VirtualKeyboardManager {
     private fun updateKeysVisuals(context: Context) {
         val shiftOrCaps = isShiftActive || isCapsLockActive
 
-        for ((view, baseChar) in letterKeyViews) {
-            view.text = if (shiftOrCaps) baseChar.uppercase() else baseChar.lowercase()
-        }
-
         val colorPrimary = ContextCompat.getColor(context, R.color.colorPrimary)
-        val colorCardBackground = ContextCompat.getColor(context, R.color.colorCardBackground)
         val colorTextPrimary = ContextCompat.getColor(context, R.color.colorTextPrimary)
         val colorOnPrimary = ContextCompat.getColor(context, android.R.color.white)
 
-        modifierKeyViews["SHIFT"]?.let {
-            if (isShiftActive) {
-                it.setBackgroundColor(colorPrimary)
-                it.setTextColor(colorOnPrimary)
+        for ((view, baseChar) in letterKeyViews) {
+            val upperCase = baseChar.uppercase()
+            view.text = if (shiftOrCaps) upperCase else baseChar.lowercase()
+
+            val isVowel = upperCase in listOf("A", "E", "I", "O", "U")
+            val isN = upperCase == "N"
+            val shouldHighlight = (isAccentPending && (isVowel || isN)) || (isDieresisPending && isVowel)
+
+            if (shouldHighlight) {
+                ViewCompat.setBackgroundTintList(view, android.content.res.ColorStateList.valueOf(colorPrimary))
+                view.setTextColor(colorOnPrimary)
             } else {
-                it.setBackgroundResource(R.drawable.bg_keyboard_key)
-                it.setTextColor(colorTextPrimary)
+                ViewCompat.setBackgroundTintList(view, null)
+                view.setTextColor(colorTextPrimary)
             }
         }
 
-        modifierKeyViews["CAPS"]?.let {
-            if (isCapsLockActive) {
-                it.setBackgroundColor(colorPrimary)
-                it.setTextColor(colorOnPrimary)
-            } else {
-                it.setBackgroundResource(R.drawable.bg_keyboard_key)
-                it.setTextColor(colorTextPrimary)
+        val modifierKeys = listOf("SHIFT", "CAPS", "CTRL", "ALT")
+        for (modKey in modifierKeys) {
+            val isActive = when (modKey) {
+                "SHIFT" -> isShiftActive
+                "CAPS" -> isCapsLockActive
+                "CTRL" -> isCtrlActive
+                "ALT" -> isAltActive
+                else -> false
             }
-        }
-
-        modifierKeyViews["CTRL"]?.let {
-            if (isCtrlActive) {
-                it.setBackgroundColor(colorPrimary)
-                it.setTextColor(colorOnPrimary)
-            } else {
-                it.setBackgroundResource(R.drawable.bg_keyboard_key)
-                it.setTextColor(colorTextPrimary)
-            }
-        }
-
-        modifierKeyViews["ALT"]?.let {
-            if (isAltActive) {
-                it.setBackgroundColor(colorPrimary)
-                it.setTextColor(colorOnPrimary)
-            } else {
-                it.setBackgroundResource(R.drawable.bg_keyboard_key)
-                it.setTextColor(colorTextPrimary)
+            modifierKeyViews[modKey]?.let {
+                if (isActive) {
+                    ViewCompat.setBackgroundTintList(it, android.content.res.ColorStateList.valueOf(colorPrimary))
+                    it.setTextColor(colorOnPrimary)
+                } else {
+                    ViewCompat.setBackgroundTintList(it, null)
+                    it.setTextColor(colorTextPrimary)
+                }
             }
         }
     }
@@ -352,6 +455,7 @@ object VirtualKeyboardManager {
             "SPACE" -> 4.0f
             "BACK", "ENTER", "SHIFT" -> 1.8f
             "TAB", "CAPS", "CTRL", "ALT", "CLOSE" -> 1.5f
+            "EN", "ES", "?123" -> 1.5f
             else -> 1.0f
         }
     }
@@ -359,7 +463,42 @@ object VirtualKeyboardManager {
     private fun isLetter(label: String): Boolean {
         if (label.length != 1) return false
         val c = label[0]
-        return c in 'a'..'z' || c in 'A'..'Z'
+        return c in 'a'..'z' || c in 'A'..'Z' || c == 'ñ' || c == 'Ñ'
+    }
+
+    private fun isControlKey(label: String): Boolean {
+        return label in listOf(
+            "ESC", "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
+            "BACK", "TAB", "CAPS", "ENTER", "SHIFT", "CLOSE", "CTRL", "ALT", "SPACE", "←", "↓", "→", "↑"
+        )
+    }
+
+    private fun getAccentedChar(char: String): String {
+        return when (char) {
+            "a" -> "á"
+            "e" -> "é"
+            "i" -> "í"
+            "o" -> "ó"
+            "u" -> "ú"
+            "A" -> "Á"
+            "E" -> "É"
+            "I" -> "Í"
+            "O" -> "Ó"
+            "U" -> "Ú"
+            "n" -> "ñ"
+            "N" -> "Ñ"
+            else -> "´" + char
+        }
+    }
+
+    private fun getDieresisChar(char: String): String {
+        return when (char) {
+            "u" -> "ü"
+            "U" -> "Ü"
+            "i" -> "ï"
+            "I" -> "Ï"
+            else -> "¨" + char
+        }
     }
 
     private fun getKeyCode(label: String): Int {
@@ -413,6 +552,7 @@ object VirtualKeyboardManager {
             "J" -> KeyEvent.KEYCODE_J
             "K" -> KeyEvent.KEYCODE_K
             "L" -> KeyEvent.KEYCODE_L
+            "Ñ" -> KeyEvent.KEYCODE_SEMICOLON
             ";" -> KeyEvent.KEYCODE_SEMICOLON
             "'" -> KeyEvent.KEYCODE_APOSTROPHE
             "ENTER" -> KeyEvent.KEYCODE_ENTER

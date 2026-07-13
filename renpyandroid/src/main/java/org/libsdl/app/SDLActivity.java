@@ -571,6 +571,20 @@ public class SDLActivity extends Activity {
     }
 
     /**
+     * Commits text directly to the active text input connection.
+     * Used by the custom virtual keyboard to input symbols and accented characters.
+     */
+    public static boolean commitText(String text) {
+        if (mTextEdit instanceof DummyEdit) {
+            final DummyEdit de = (DummyEdit) mTextEdit;
+            if (de.ic != null) {
+                return de.ic.commitText(text, 1);
+            }
+        }
+        return false;
+    }
+
+    /**
      * This method is called by SDL using JNI.
      */
     public static Surface getNativeSurface() {
