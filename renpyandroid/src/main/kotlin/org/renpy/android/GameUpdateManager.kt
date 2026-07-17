@@ -62,7 +62,9 @@ object GameUpdateManager {
         val tempFile = File(context.filesDir, UPDATE_TEMP_FILE)
         if (!tempFile.exists()) throw Exception(context.getString(R.string.update_error_file_not_found))
 
-        val gameDir = File(context.filesDir, "game")
+        val maslOutputFolder = File(context.filesDir, "monikaafterstory-masl-edition")
+
+        val gameDir = File(maslOutputFolder, "game")
         if (!gameDir.exists()) gameDir.mkdirs()
 
         ZipFile(tempFile).use { zip ->
@@ -72,7 +74,7 @@ object GameUpdateManager {
                 val name = entry.name
 
                 if (name.startsWith("game/") || name.startsWith("characters/")) {
-                    val targetFile = File(context.filesDir, name)
+                    val targetFile = File(maslOutputFolder, name)
 
                     if (entry.isDirectory) {
                         targetFile.mkdirs()
